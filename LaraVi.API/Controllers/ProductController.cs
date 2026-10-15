@@ -32,7 +32,10 @@ namespace LaraVi.API.Controllers
         [HttpGet("GetProductsById")]
         public async Task<ActionResult<Product>> GetProductById(int id)
         {
-            return await _productService.GetProductById(id);
+            var product = await _productService.GetProductById(id);
+            if (product == null)
+                return NotFound();
+            return product;
         }
 
         // POST api/<ProductController>
@@ -40,7 +43,7 @@ namespace LaraVi.API.Controllers
         public async Task<ActionResult<Product>> Post([FromBody] Product product)
         {
             var newProduct = await _productService.Add(product);
-            return CreatedAtAction(nameof(GetProduct), new { id = newProduct.Id }, newProduct);
+            return CreatedAtAction(nameof(GetProductById), new { id = newProduct.Id }, newProduct);
         }
 
         // PUT api/<ProductController>/5

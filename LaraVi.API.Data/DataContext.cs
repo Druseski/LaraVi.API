@@ -38,7 +38,8 @@ namespace LaraVi.API.Data
                    PhotoURL = "12x12x20",
                    SoldItems = 50,
                    Rating = 4.3,
-                   DateAdded = DateTime.Now,
+                   // Fixed value (same as in the existing migration), so the seed data does not change on every build.
+                   DateAdded = new DateTime(2021, 5, 4, 22, 25, 46, 385, DateTimeKind.Local).AddTicks(7653),
                    CountryOFOrigin = "Kurgistan",
                    Popularity = false,
                    ByWeight = true,

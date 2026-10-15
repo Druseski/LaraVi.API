@@ -32,7 +32,10 @@ namespace LaraVi.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Category>> GetCategoryById(int id)
         {
-            return await _categoryService.GetCategoryById(id);
+            var category = await _categoryService.GetCategoryById(id);
+            if (category == null)
+                return NotFound();
+            return category;
         }
 
         // POST api/<CategoryController>
@@ -40,7 +43,7 @@ namespace LaraVi.API.Controllers
         public async Task<ActionResult<Category>> Post([FromBody] Category category)
         {
             var newCategory = await _categoryService.Add(category);
-            return CreatedAtAction(nameof(GetCategory),new { id = newCategory.Id },newCategory);
+            return CreatedAtAction(nameof(GetCategoryById),new { id = newCategory.Id },newCategory);
         }
 
         // PUT api/<CategoryController>/5
